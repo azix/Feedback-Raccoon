@@ -1,0 +1,19 @@
+{% block content %}
+<h2>Results</h2>
+<ul>
+    {% for results in object_list %}
+
+
+    <li>{{ results.questions }}</li>
+
+    <li>{{ results.comment }}</li>
+    <li>{{ results.users }}</li>
+
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+
+

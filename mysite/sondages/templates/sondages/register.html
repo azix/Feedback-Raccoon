@@ -1,0 +1,169 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'sondages/style.css' %}"/>
+
+
+{% block extrahead %}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js" type="text/javascript"></script>
+<script>
+        $(function() {
+                $( "#id_birthday" ).datepicker();
+        });
+
+
+</script>
+
+{% endblock %}
+<head>
+
+
+
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!--The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+
+     <!--Bootstrap -->
+    <link href="{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+     <!--HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+     <!--WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--&lt;!&ndash;[if lt IE 9]>-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!--<![endif]&ndash;&gt;-->
+
+
+</head>
+
+
+
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/register">Register form</a></li>
+                        <li><a href="/login/">login</a></li>
+                        <li><a href="results/">results</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input class="form-control" placeholder="Search" type="text">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}<li><a href="/logout/">You are logged in {{ user }} ! </a></li>
+                {% else %}<li><a href="/login/">Login</a></li>{% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+{% block content %}
+<body background="navy">
+<div class="container">
+<form action="" method="post" class="form-horizontal">
+     <fieldset>
+     <legend class="text-left">Registration Form</legend>
+    {% csrf_token %}
+    {% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
+     <div class="center col-xs-12 col-md-8 form-group">
+
+        {% load widget_tweaks %}
+
+        {% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
+        <p><label for="username"   class="col-lg-2 control-label" {% if form.username.errors %} class="error" {% endif %}>Username:</label></p>
+
+        <p>{{ form.username|add_class:"form-control"|attr:"id:username" }}</p>
+    </div>
+    <div class="center col-xs-12 col-md-8 form-group">
+
+        {% if form.email.errors %}<p class="error">{{ form.email.errors }}</p>{% endif %}
+        <p><label for="email"   class="col-lg-2 control-label" {% if form.email.errors %} class="error" {% endif %}>Email:</label></p>
+    {% load widget_tweaks %}
+        <p>{{ form.email|add_class:"form-control"|attr:"id:email" }}</p>
+    </div>
+    <div class="center col-xs-12 col-md-8 form-group">
+        {% if form.password.errors %}<p class="error">{{ form.password.errors }}</p>{% endif %}
+        <p><label for="password"  class="col-lg-2 control-label" {% if form.password.errors %} class="error" {% endif %}>Password:</label></p>
+    {% load widget_tweaks %}
+        <p>{{ form.password|add_class:"form-control"|attr:"id:password"}}</p>
+    </div>
+    <div class="center col-xs-12 col-md-8 form-group">
+        {% if form.password1.errors %}<p class="error">{{ form.password1.errors }}</p>{% endif %}
+        <p><label for="password1"   class="col-lg-2 control-label" {% if form.password1.errors %} class="error" {% endif %}>Verify Password:</label></p>
+    {% load widget_tweaks %}
+        <p>{{ form.password1|add_class:"form-control"|attr:"id:password1" }}</p>
+    </div>
+    <div class="center col-xs-12 col-md-8 form-group">
+        {% if form.birthday.errors %}<p class="error">{{ form.birthday.errors }}</p>{% endif %}
+        <p><label for="birthday"  class="col-lg-2 control-label" {% if form.birthday.errors %} class="error" {% endif %}>Birthday:</label></p>
+    {% load widget_tweaks %}
+        <p>{{ form.birthday|add_class:"datepicker"|add_class:"form-control"}}</p>
+    </div>
+    <div class="center col-xs-12 col-md-8 form-group">
+        {% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
+        <p><label for="name"   class="col-lg-2 control-label"{% if form.name.errors %} class="error" {% endif %}>Name:</label></p>
+    {% load widget_tweaks %}
+        <p>{{ form.name|add_class:"form-control"|attr:"id:name" }}</p>
+    </div>
+    <div class="center form-group col-lg-10 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+   </fieldset>
+ </form>
+</div>
+
+{% endblock %}
+
+
+
+<!---->
+ <!--jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!--Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'bootstrap-3.3.5-dist/js/bootstrap.min.js' %}"></script>
+
+</body>
+
